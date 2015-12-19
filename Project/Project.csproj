@@ -41,21 +41,17 @@
       <HintPath>..\packages\Lucene.Net.3.0.3\lib\NET35\Lucene.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="SolrNet, Version=0.4.0.4001, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SolrNet.0.4.0.4001\lib\SolrNet.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\..\..\Desktop\lucenenet-812e1c541f1a00392391c5761fd3dcb7b0aedd88\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -67,6 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmptySearchTextBox.cs" />
+    <Compile Include="sqlConnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sqlConnect.designer.cs">
+      <DependentUpon>sqlConnect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Project.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +83,9 @@
     <Compile Include="DBSchemas.Designer.cs">
       <DependentUpon>DBSchemas.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="sqlConnect.resx">
+      <DependentUpon>sqlConnect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Project.resx">
       <DependentUpon>Project.cs</DependentUpon>
     </EmbeddedResource>
@@ -107,11 +112,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SolrNet.chm" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="changelog.txt" />
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

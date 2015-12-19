@@ -142,7 +142,12 @@ namespace Project
             {
                 Variables.fieldnames[j++] = item.ToString();
             }
-
+            int k = 0;
+            Variables.selectedfieldsname = new String[FieldListbox.SelectedItems.Count];
+            foreach (Object item in FieldListbox.SelectedItems)
+            {
+                Variables.fieldnames[k++] = item.ToString();
+            }
             //creating an instance of the <Project> form and bring to font.
             var ProjectForm = Application.OpenForms.OfType<Project>().Single();
             ProjectForm.FillDataGridView();
@@ -154,6 +159,6 @@ namespace Project
 class Variables
 {
     public static string selectedtablename;
-    //public static string[] selectedfieldsname;
+    public static string[] selectedfieldsname;
     public static string[] fieldnames;
 }
