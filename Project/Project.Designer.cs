@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Project));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.accessConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sQLConnectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,38 +72,22 @@
             // 
             // openToolStripMenuItem
             // 
-            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.accessConnectionToolStripMenuItem,
-            this.sQLConnectionToolStripMenuItem});
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
-            // 
-            // accessConnectionToolStripMenuItem
-            // 
-            this.accessConnectionToolStripMenuItem.Name = "accessConnectionToolStripMenuItem";
-            this.accessConnectionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.accessConnectionToolStripMenuItem.Text = "Access Connection";
-            this.accessConnectionToolStripMenuItem.Click += new System.EventHandler(this.accessConnectionToolStripMenuItem_Click);
-            // 
-            // sQLConnectionToolStripMenuItem
-            // 
-            this.sQLConnectionToolStripMenuItem.Name = "sQLConnectionToolStripMenuItem";
-            this.sQLConnectionToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.sQLConnectionToolStripMenuItem.Text = "SQL Connection";
-            this.sQLConnectionToolStripMenuItem.Click += new System.EventHandler(this.sQLConnectionToolStripMenuItem_Click);
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -170,9 +153,9 @@
             // 
             this.SearchTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SearchTextbox.Location = new System.Drawing.Point(63, 22);
+            this.SearchTextbox.Location = new System.Drawing.Point(18, 22);
             this.SearchTextbox.Name = "SearchTextbox";
-            this.SearchTextbox.Size = new System.Drawing.Size(452, 20);
+            this.SearchTextbox.Size = new System.Drawing.Size(497, 20);
             this.SearchTextbox.TabIndex = 3;
             this.toolTip1.SetToolTip(this.SearchTextbox, "Search bar");
             // 
@@ -195,6 +178,7 @@
             this.ClientSize = new System.Drawing.Size(799, 613);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Project";
             this.Text = "Assignment";
@@ -225,8 +209,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Button RefreshButton;
-        private System.Windows.Forms.ToolStripMenuItem accessConnectionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sQLConnectionToolStripMenuItem;
     }
 }
 

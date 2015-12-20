@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DBSchemas));
             this.TableListbox = new System.Windows.Forms.ListBox();
             this.FieldListbox = new System.Windows.Forms.ListBox();
             this.TableNames = new System.Windows.Forms.GroupBox();
@@ -138,6 +139,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.TableNames);
             this.Font = new System.Drawing.Font("Comic Sans MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DBSchemas";
             this.Text = "Tables & Fields";
             this.TableNames.ResumeLayout(false);

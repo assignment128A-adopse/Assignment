@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Project
 {
     public partial class DBSchemas : Form
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public DBSchemas()
         {
             InitializeComponent();
@@ -20,9 +20,8 @@ namespace Project
             FillArrays();
         }
 
-        //Variable Declaration
-        ArrayList arrTables; // used to hold a list of views and tables
-        public string mSelectedTable; //
+        //Used to hold a list of views and tables
+        ArrayList arrTables; 
 
         //Method to fill the arrays.
         public void FillArrays()
@@ -30,7 +29,7 @@ namespace Project
             try
             {
                 StoreTables();
-                // clear internal lists
+                //Clear internal lists
                 TableListbox.Items.Clear();
 
                 // update the lists from the arrays holding the
@@ -56,21 +55,21 @@ namespace Project
             // hang while this function executes
             this.Refresh();
 
-            // make sure we have a connection
+            //Make sure we have a connection
             if (Properties.Settings.Default.ConnString != string.Empty)
             {
-                // start up the connection using the current connection string
+                //Start up the connection using the current connection string
                 using (OleDbConnection conn = new OleDbConnection(Properties.Settings.Default.ConnString))
                 {
                     try
                     {
-                        // open the connection to the database 
+                        //Open the connection to the database 
                         conn.Open();
 
-                        // Get the Tables
+                        //Get the Tables
                         SchemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new Object[] { null, null, null, "TABLE" });
 
-                        // Store the table names in the class scoped array list of table names
+                        //Store the table names in the class scoped array list of table names
                         for (int i = 0; i < SchemaTable.Rows.Count; i++)
                         {
                             arrTables.Add(SchemaTable.Rows[i].ItemArray[2].ToString());
@@ -78,8 +77,8 @@ namespace Project
                     }
                     catch (Exception ex)
                     {
-                        // break and notify if the connection fails
-                        MessageBox.Show(ex.Message, "Connection Error");
+                        //Break and notify if there's a connection failure
+                        MessageBox.Show(ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -99,16 +98,15 @@ namespace Project
                 return;
             }
 
-            // make sure we have a connection
+            //Make sure we have a connection
             if (Properties.Settings.Default.ConnString != string.Empty)
             {
-                // start up the connection using the current connection string
+                //Start up the connection using the current connection string
                 using (OleDbConnection conn = new OleDbConnection(Properties.Settings.Default.ConnString))
                 {
-
                     try
                     {
-                        // open the connection to the database 
+                        //Open the connection to the database 
                         conn.Open();
                         FieldListbox.Items.Clear();
 
@@ -121,44 +119,49 @@ namespace Project
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Connection Error");
+                        //Break and notify if there's a connection failure
+                        MessageBox.Show(ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("There is no connection string current defined.", "Connection String");
+                MessageBox.Show("There is no connection string current defined.", "Connection String", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     
         //Triggered when the Show Button is pressed.
         private void ShowButton_Click(object sender, EventArgs e)
         {
-            Variables.selectedtablename = TableListbox.SelectedItem.ToString();
+            Variables.selectedTableName = TableListbox.SelectedItem.ToString();
             int j = 0;
-            //adding items to the fieldnames array.
-            Variables.fieldnames = new String[FieldListbox.Items.Count];
+            //Adding items to the fieldNames array.
+            Variables.fieldNames = new String[FieldListbox.Items.Count];
             foreach (Object item in FieldListbox.Items)
             {
-                Variables.fieldnames[j++] = item.ToString();
+                Variables.fieldNames[j++] = item.ToString();
             }
+
             int k = 0;
-            Variables.selectedfieldsname = new String[FieldListbox.SelectedItems.Count];
+            //Adding items to the selectedFieldsName array.
+            Variables.selectedFieldsName = new String[FieldListbox.SelectedItems.Count];
             foreach (Object item in FieldListbox.SelectedItems)
             {
-                Variables.fieldnames[k++] = item.ToString();
+                Variables.selectedFieldsName[k++] = item.ToString();
             }
-            //creating an instance of the <Project> form and bring to font.
+
+            //Creating an instance of the <Project> form and bring to font.
             var ProjectForm = Application.OpenForms.OfType<Project>().Single();
             ProjectForm.FillDataGridView();
-            this.Close();
+            this.Dispose();
         }
     }
 }
-//Storing some variables to use them in the Project Form.
+
+//Declairing some variables to use them in the <Project> Form.
 class Variables
 {
-    public static string selectedtablename;
-    public static string[] selectedfieldsname;
-    public static string[] fieldnames;
+    public static string selectedTableName;
+    public static string[] selectedFieldsName;
+    public static string[] fieldNames;
 }

@@ -1,35 +1,168 @@
 using System;
-using System.Collections;
-using System.Configuration;
-using System.ComponentModel;
-using System.Data;
 using System.Data.OleDb;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-
 
 namespace Project
 {
-    public partial class sqlConnect : Form
+    public partial class ConnectForm : Form
     {
-
         /// <summary>
         /// Default constructor
         /// </summary>
-        public sqlConnect()
+        public ConnectForm()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Browse for an access database
+        /// </summary>
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            // opens the file dialog to select a database
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            openFile.Title = "MS Access Database";
+            openFile.Filter = "Database Files (*.accdb, *.mdb)|*.accdb;*.mdb|" + "All files (*.*)|*.*";
+
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    txtAccessDBname.Text = openFile.FileName;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message, "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Close the form
+        /// </summary>
+        private void btnAccessCancel_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Test an MS Access database connection
+        /// </summary>
+        private void btnAccessTest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Future use; if a current data model and database
+                // type need to be identified and saved with the connect
+                // string to identify its purpose
+                Properties.Settings.Default.CurrentDataModel = "MyAccess";
+                Properties.Settings.Default.CurrentDatabaseType = "Access";
+
+                // Set the access database connection properties
+                Properties.Settings.Default.ProviderString = txtAccessProvider.Text;
+                Properties.Settings.Default.Password = txtAccessPassword.Text;
+                Properties.Settings.Default.UserID = txtAccessUserID.Text;
+                Properties.Settings.Default.ServerName = txtAccessDBname.Text;
+
+                // Set the access database connection string
+                Properties.Settings.Default.ConnString = "Provider=" + Properties.Settings.Default.ProviderString +
+                                    ";Password=" + Properties.Settings.Default.Password +
+                                    ";User ID=" + Properties.Settings.Default.UserID +
+                                    ";Data Source=" + Properties.Settings.Default.ServerName;
+
+                // Save the properties
+                Properties.Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                // inform the user if the connection could not be saved
+                MessageBox.Show("Failed to connect to data source: " + ex.Message, "Connection Status", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //Test Connection
+            if (Properties.Settings.Default.ConnString != string.Empty)
+            {
+                using (OleDbConnection conn = new OleDbConnection(Properties.Settings.Default.ConnString))
+                {
+                    try
+                    {
+                        // test the connection with an open attempt
+                        conn.Open();
+                        MessageBox.Show("Access connection test successful", "Connection Test");
+                    }
+                    catch (Exception ex)
+                    {
+                        // inform the user if the connection failed
+                        MessageBox.Show(ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Persist and test an Access database connection
+        /// </summary>
+        private void btnAccessOK_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Future use; if a current data model and database
+                // type need to be identified and saved with the connect
+                // string to identify its purpose
+                Properties.Settings.Default.CurrentDataModel = "MyAccess";
+                Properties.Settings.Default.CurrentDatabaseType = "Access";
+
+                // Set the access database connection properties
+                Properties.Settings.Default.ProviderString = txtAccessProvider.Text;
+                Properties.Settings.Default.Password = txtAccessPassword.Text;
+                Properties.Settings.Default.UserID = txtAccessUserID.Text;
+                Properties.Settings.Default.ServerName = txtAccessDBname.Text;
+
+                // Set the access database connection string
+                Properties.Settings.Default.ConnString = "Provider=" + Properties.Settings.Default.ProviderString +
+                                    ";Password=" + Properties.Settings.Default.Password +
+                                    ";User ID=" + Properties.Settings.Default.UserID +
+                                    ";Data Source=" + Properties.Settings.Default.ServerName;
+
+                // Save the properties
+                Properties.Settings.Default.Save();
+            }
+            catch (Exception ex)
+            {
+                // Inform the user if the connection was not saved
+                MessageBox.Show(ex.Message, "Error saving connection information.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //Test Connection
+            if (Properties.Settings.Default.ConnString != string.Empty)
+            {
+                using (OleDbConnection conn = new OleDbConnection(Properties.Settings.Default.ConnString))
+                {
+                    try
+                    {
+                        // test the database connection string with an open attempt
+                        conn.Open();
+                        this.Dispose();
+
+                        // creating a form instance and calling it
+                        DBSchemas form = new DBSchemas();
+                        form.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        // inform the user if the connection failed
+                        MessageBox.Show(ex.Message, "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }        
 
         /// <summary>
         /// SQL Server 
         /// Configure for the use of integrated
         /// security
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void cbxIntegratedSecurity_CheckedChanged(object sender, EventArgs e)
         {
             // if the user has checked the SQL Server connection
@@ -51,29 +184,20 @@ namespace Project
             }
         }
 
-
-
         /// <summary>
         /// Close the form
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnSQLserverCancel_Click(object sender, EventArgs e)
         {
             this.Dispose();
         }
 
-
-
         /// <summary>
         /// Test the SQL Server connection string
         /// based upon the user supplied settings
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnSqlServerTest_Click(object sender, EventArgs e)
         {
-
             try
             {
                 // Future use; if a current data model and database
@@ -108,10 +232,8 @@ namespace Project
                         ";Data Source=" + Properties.Settings.Default.ServerName +
                         ";Initial Catalog=" + Properties.Settings.Default.InitialCatalog;
                 }
-
                 // Save the property settings
                 Properties.Settings.Default.Save();
-
             }
             catch (Exception ex)
             {
@@ -137,17 +259,11 @@ namespace Project
                     }
                 }
             }
-
-
         }
-
-
 
         /// <summary>
         /// Persist and test an SQL Server connection
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnSqlServerOK_Click(object sender, EventArgs e)
         {
             try
@@ -184,10 +300,8 @@ namespace Project
                         ";Data Source=" + Properties.Settings.Default.ServerName +
                         ";Initial Catalog=" + Properties.Settings.Default.InitialCatalog;
                 }
-
                 // Save the property settings
                 Properties.Settings.Default.Save();
-
             }
             catch (Exception ex)
             {
@@ -214,17 +328,6 @@ namespace Project
                 }
             }
         }
-
-
-
-        /// <summary>
-        /// Close the form
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-       
-        
-
-
+                
     }
 }

@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>forward.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Project.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -45,9 +51,6 @@
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\..\..\Desktop\lucenenet-812e1c541f1a00392391c5761fd3dcb7b0aedd88\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
@@ -63,11 +66,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmptySearchTextBox.cs" />
-    <Compile Include="sqlConnect.cs">
+    <Compile Include="ConnectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="sqlConnect.designer.cs">
-      <DependentUpon>sqlConnect.cs</DependentUpon>
+    <Compile Include="ConnectForm.designer.cs">
+      <DependentUpon>ConnectForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Project.cs">
       <SubType>Form</SubType>
@@ -83,8 +86,8 @@
     <Compile Include="DBSchemas.Designer.cs">
       <DependentUpon>DBSchemas.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="sqlConnect.resx">
-      <DependentUpon>sqlConnect.cs</DependentUpon>
+    <EmbeddedResource Include="ConnectForm.resx">
+      <DependentUpon>ConnectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Project.resx">
       <DependentUpon>Project.cs</DependentUpon>
@@ -117,6 +120,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="forward.ico" />
     <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup />
